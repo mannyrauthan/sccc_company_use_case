@@ -3,7 +3,7 @@
   hosts: windows
   gather_facts: no
   tasks:
-   - name: Run inline PowerShell
-     ansible.windows.win_shell: |
-     Write-Output "Hello from AWX!"
-     Get-Date
+    - name: Run inline PowerShell
+      ansible.windows.win_shell: |
+      Write-Output "Hello from AWX!"
+      Get-Date
