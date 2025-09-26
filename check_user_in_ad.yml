@@ -1,12 +1,26 @@
 ---
-- name: Run inline PowerShell script
-- hosts: localhost
+- name: Run PowerShell script on Ubuntu using AWX
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    username_to_check: "targetuser"
+
   tasks:
-    - name: Execute a PowerShell command
-      ansible.windows.win_powershell:
-        script: |
-          Write-Output "Hello from AWX!"
-          Get-Date
+    - name: Run PowerShell script using pwsh
+      ansible.builtin.shell: |
+        pwsh -Command "& {
+          param([string]$Username)
+          Write-Output 'Checking user: ' + $Username
+          # Add your AD query logic here
+        } -Username '{{ username_to_check }}'"
+      register: pwsh_output
+
+    - name: Show PowerShell output
+      debug:
+        var: pwsh_output.stdout
+
 
 
 
