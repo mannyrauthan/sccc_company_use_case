@@ -1,8 +1,12 @@
 ---
 - name: Run inline PowerShell script
-  ansible.windows.win_powershell: |
-       Write-Output "Hello from AWX!"
-       Get-Date
+  tasks:
+    - name: Execute a PowerShell command
+      ansible.windows.win_powershell:
+        script: |
+          Write-Output "Hello from AWX!"
+          Get-Date
+
 
 
 
