@@ -1,11 +1,13 @@
 ---
 - name: Run inline PowerShell script
+- hosts: localhost
   tasks:
     - name: Execute a PowerShell command
       ansible.windows.win_powershell:
         script: |
           Write-Output "Hello from AWX!"
           Get-Date
+
 
 
 
