@@ -1,25 +1,20 @@
 ---
-- name: Run PowerShell script on Ubuntu using AWX
-  hosts: localhost
-  connection: local
-  gather_facts: false
-
+- name: Connect to Windows Server using Kerberos
+  hosts: windows_servers
+  gather_facts: no
   vars:
-    username_to_check: "targetuser"
+    ansible_connection: winrm
+    ansible_winrm_transport: kerberos
+    ansible_winrm_server_cert_validation: ignore
+    ansible_port: 5985  # or 5986 for HTTPS
+    ansible_user: "INSEE\\service.itom-mid"
+    ansible_password: ""  # Leave blank if using Kerberos ticket
 
   tasks:
-    - name: Run PowerShell script using pwsh
-      ansible.builtin.shell: |
-        pwsh -Command "& {
-          param([string]$Username)
-          Write-Output 'Checking user: ' + $Username
-          # Add your AD query logic here
-        } -Username '{{ username_to_check }}'"
-      register: pwsh_output
+    - name: Run a simple command on Windows
+      ansible.windows.win_command:
+        command: whoami
 
-    - name: Show PowerShell output
-      debug:
-        var: pwsh_output.stdout
 
 
 
