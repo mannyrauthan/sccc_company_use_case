@@ -1,6 +1,6 @@
 ---
 - name: Connect to Windows Server using Kerberos
-  hosts: all
+  hosts: 10.224.21.14
   gather_facts: false
   connection: winrm
   vars:
@@ -11,6 +11,7 @@
     - name: Run a simple command on Windows
       ansible.windows.win_command:
         command: whoami
+
 
 
 
