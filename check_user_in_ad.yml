@@ -1,19 +1,17 @@
 ---
 - name: Connect to Windows Server using Kerberos
-  hosts: windows_servers
-  gather_facts: no
+  hosts: all
+  gather_facts: false
+  connection: winrm
   vars:
-    ansible_connection: winrm
     ansible_winrm_transport: kerberos
     ansible_winrm_server_cert_validation: ignore
-    ansible_port: 5985  # or 5986 for HTTPS
-    ansible_user: "INSEE\\service.itom-mid"
-    ansible_password: ""  # Leave blank if using Kerberos ticket
 
   tasks:
     - name: Run a simple command on Windows
       ansible.windows.win_command:
         command: whoami
+
 
 
 
